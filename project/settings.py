@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
+    'ckeditor',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +43,12 @@ INSTALLED_APPS = [
     'about',
     'blog',
     'property',
+    'django_filters',
+    "bootstrap4",
+    "taggit",
+    'django_seed',
+    'footer',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +66,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -66,6 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'footer.footer_context_processor.get_footer',
             ],
         },
     },
@@ -129,3 +138,4 @@ STATICFILES_DIRS = [
 STATIC_ROOT = "/var/www/example.com/static/"
 MEDIA_URL='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+CKEDITOR_UPLOAD_PATH = "uploads/"

@@ -1,15 +1,32 @@
 from django.db import models
+from django.db.models.fields import SlugField
 from django.utils.datetime_safe import datetime
 from django.utils import timezone
+from ckeditor.fields import RichTextField
+from django.utils.text import slugify
+from django.contrib.auth.models import User
+from django.urls import reverse
 class Room(models.Model):
+    owner=models.ForeignKey(User, related_name='room_owner', on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     price = models.IntegerField(default=0)
-    description = models.TextField(max_length=5000)
+    description = RichTextField()
     location = models.CharField( max_length=5000)
-    image=models.ImageField( upload_to='property/', height_field=None, width_field=None, max_length=None)
+    image=models.ImageField( upload_to='property/')
     category = models.ForeignKey('category', related_name='room_category', on_delete=models.CASCADE)
+    slug=models.SlugField(null=True,blank=True)
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug=slugify(self.title)
+        super(Room, self).save(*args, **kwargs) # Call the real save() method
     def __str__(self):
         return self.title
+    class Meta:
+        verbose_name = 'room'    
+        verbose_name_plural = 'rooms'
+        ordering=['price']
+    def get_absolute_url(self):
+        return reverse ( 'rooms:detail', kwargs={'slug': self.slug })
     
 class RoomImage(models.Model):
     room= models.ForeignKey(Room, related_name='room_image', on_delete=models.CASCADE)
@@ -23,7 +40,7 @@ class category(models.Model):
     class Meta:
         verbose_name_plural = 'categories'
 class RoomReview(models.Model):
-    room=models.ForeignKey(Room,related_name=("room_review"), on_delete=models.CASCADE)
+    room=models.ForeignKey(Room,related_name="room_review", on_delete=models.CASCADE)
     rate=models.IntegerField(default=0)
     feedback=models.TextField(null=True,blank=True )
     def __str__(self):

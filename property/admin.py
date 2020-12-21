@@ -5,6 +5,7 @@ class roomTabular(admin.StackedInline):
 class roomsearch(admin.ModelAdmin):
     list_display=['title','price','location']
     inlines=[roomTabular,]
+    prepopulated_fields={'slug':['title']}
 admin.site.register(models.Room,roomsearch)
 admin.site.register(models.RoomBook)
 admin.site.register(models.RoomImage)
