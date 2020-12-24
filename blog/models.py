@@ -7,7 +7,7 @@ class Post(models.Model):
     description=models.TextField(max_length=10000)
     tags=TaggableManager()
     image=models.ImageField(upload_to='posts/')
-    created_at=models.DateTimeField(default=timezone.now())
+    created_at=models.DateTimeField(default=timezone.now().date)
     author=models.ForeignKey(User,related_name='post_author',on_delete=models.CASCADE)
     comments=''
     search=''

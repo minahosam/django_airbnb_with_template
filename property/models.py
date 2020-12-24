@@ -27,6 +27,22 @@ class Room(models.Model):
         ordering=['price']
     def get_absolute_url(self):
         return reverse ( 'rooms:detail', kwargs={'slug': self.slug })
+    def check_aviability(self):
+        all_reservations=self.room_book.all()
+        print(all_reservations)
+        starting_reservation=self.room_book.from_date
+        ended_reservation=self.to_date
+        for reserve in all_reservations:
+            print(reserve)
+            if starting_reservation > reserve.from_date and ended_reservation < reserve.to_date:
+                return 'room is booked'
+            elif starting_reservation < reserve.from_date and ended_reservation > reserve.to_date:
+                return 'room is booked'
+        else:
+            return 'aviable'
+    #def all(self):
+    #    all_reservation=self.room_book.all()
+    #    return all_reservation
     
 class RoomImage(models.Model):
     room= models.ForeignKey(Room, related_name='room_image', on_delete=models.CASCADE)
@@ -55,4 +71,14 @@ class RoomBook(models.Model):
     children=models.IntegerField(default=0)
     def __str__(self):
         return self.name
-    
+    #def room_reserve(self):
+        all_reservation=self.room.all
+        starting_reserve=self.from_date()
+        ending_reserve=self.to_date()
+        for reserve in all_reservation:
+            if starting_reserve > reserve and ending_reserve < reserve:
+                return 'room is booked'
+            elif starting_reserve < reserve and ending_reserve > reserve:
+                return 'room is booked'
+        else:
+            return 'aviable'
