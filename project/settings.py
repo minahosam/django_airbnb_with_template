@@ -26,7 +26,7 @@ SECRET_KEY = '-!@pp!@c5e@c7&+9789i0nwr@u-ib6t(!m08s+t5_nkyblh&i+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0060a9c7f479.ngrok.io']
 
 
 # Application definition
@@ -41,7 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'about',
+    'social_login',
+    'contact',
     'blog',
+    'index',
     'property',
     'django_filters',
     "bootstrap4",
@@ -50,7 +53,17 @@ INSTALLED_APPS = [
     'footer',
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.twitter',
+    'social_django',
 ]
+SITE_ID = 1
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
@@ -63,6 +76,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -82,6 +96,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'footer.footer_context_processor.get_footer',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -118,6 +134,19 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
+LANGUAGES=(
+    ('ar','Arabic'),
+    ('en','english')
+)
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+SOCIAL_AUTH_FACEBOOK_KEY='857766948392110'
+SOCIAL_AUTH_FACEBOOK_SECRET='ddfe1e3b07eff94c85e64b464ff02706'
 
 
 # Internationalization
@@ -146,3 +175,10 @@ STATIC_ROOT = "/var/www/example.com/static/"
 MEDIA_URL='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 CKEDITOR_UPLOAD_PATH = "uploads/"
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'karas582@gmail.com'
+EMAIL_HOST_PASSWORD = 'nvzafdguorfsnngq'
+EMAIL_PORT = 587

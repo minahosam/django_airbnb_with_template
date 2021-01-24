@@ -27,6 +27,12 @@ urlpatterns = [
     path('post/',include('blog.urls',namespace='posts')),
     path('about/',include('about.urls',namespace='about')),
     path('api-auth/', include('rest_framework.urls')),
+    path('',include('index.urls',namespace='home')),
+    path('contact/',include('contact.urls',namespace='contact')),
+    path('rest-auth/', include('rest_auth.urls')),
+    path('rest-auth/signup', include('rest_auth.registration.urls')),
+    path('social-auth/', include('social_django.urls', namespace='social')),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

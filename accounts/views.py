@@ -1,9 +1,10 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from .models import Profile
 from .forms import UserForm , ProfileForm , UserCreateForm
 from django.urls import reverse
 from django.contrib.auth import authenticate, login
-from property.models import RoomBook
+from property.models import Room, RoomBook
+from property.forms import roomreviewform
 # Create your views here.
 
 def signup(request):
@@ -57,7 +58,22 @@ def profile_edit(request):
 def user_reservation(request):
     my_reservation = RoomBook.objects.filter(name=request.user)
     return render(request,'profile/my_reservation.html',{'my_reservation':my_reservation})
-    
+def rate_feedback(request,slug):
+    room=get_object_or_404(Room,slug=slug)
+    if request.method=='POST':
+        form =roomreviewform(request.POST)
+        if form.is_valid():
+            myform=form.save(commit=False)
+            myform.room=room
+            myform.author=request.user
+            myform.save()
+            return redirect('rooms:list')
+    else:
+        form=roomreviewform()
+    return render(request,'profile/feedback.html',{'form':form})
+def show_my_listing(request):
+    listing=Room.objects.filter(owner=request.user)
+    return render(request,'profile/listing.html',{'listing':listing})
 
 
 

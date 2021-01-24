@@ -54,7 +54,7 @@
 									<hr>
 									<p class="bottom-area d-flex">
 										<span><i class="icon-map-o"></i> {{room.room.location}}</span>
-										<span class="ml-auto"><a href="">Write Feedback</a></span>
+										<span class="ml-auto"><a href="{% url 'accounts:rate_feedback' room.room.slug %}">Write Feedback</a></span>
 									</p>
 								</div>
 							</div>

@@ -147,7 +147,30 @@
 
 
           			</div>
-          		</div>
+				  </div>
+				  <div class="col-md-12 hotel-single ftco-animate mb-5 mt-5">
+					<h4 class="mb-4">Reviews</h4>
+					<div class="row">
+						{% for related in room.room_review.all %}
+						<div class="col-md-12">
+						  <div class="destination">
+							  <div class="text p-3">
+								  <div class="d-flex">
+									  <div class="one">
+										  <h3><a href="{{room.get_absolute_url}}">{{related.author}}</a></h3>
+										  <p>{{related.rate}}</p>
+										  <span><i class="icon-map-o"></i> {{related.feedback}}</span>
+									  </div>
+								  </div>
+								
+							  </div>
+						  </div>
+					  </div>
+						{% endfor %}
+
+
+					</div>
+				</div>
 
           	</div>
           </div> <!-- .col-md-8 -->

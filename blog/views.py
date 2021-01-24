@@ -19,4 +19,8 @@ class blog_detail(DetailView):
         context['all_posts']=Post.objects.all()[:2]
         context['all_tags']=Tag.objects.all()
         return context
-    
+    def get_object(self, queryset=None):
+        obj = super(blog_detail, self).get_object(queryset=queryset)
+        obj.views_count += 1
+        obj.save()
+        return obj
