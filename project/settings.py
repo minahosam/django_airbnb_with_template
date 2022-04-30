@@ -191,6 +191,7 @@ STATICFILES_DIRS = [
 STATIC_ROOT = "/var/www/example.com/static/"
 MEDIA_URL='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
